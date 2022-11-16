@@ -1,0 +1,56 @@
+name: .NET Core 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Setup MSBuild.exe
+      uses: actions/setup-dotnet@v3
+      
+    - run: dotnet build 
+    
+    - name: Create the package
+      run: dotnet pack --configuration Release 
+      
+#     - name: Azure Login
+#       uses: azure/docker-login@v1
+#       with:
+#         login-server: '<login server>' 
+#         username: '<username>'
+#         password: '<password>'
+        
+#     - name: Docker Build
+#       run: |
+#          docker build . -t contoso.azurecr.io/sample:${{ github.sha }}
+#          docker push contoso.azurecr.io/sample:${{ github.sha }}
+    
+#     - name: Nexus Repo Publish
+#       uses: sonatype-nexus-community/nexus-repo-github-action@master
+#       with:
+#         serverUrl: "server-name"
+#         username: "username"
+#         password: ${{ secrets.password }}
+#         format: raw
+#         repository: sample-releases
+#         coordinates: directory=nexus-repo-github-action-test-rawrepodir
+#         assets: .
+#         filename: .
+
+  
