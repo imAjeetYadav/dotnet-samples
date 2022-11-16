@@ -25,10 +25,10 @@ jobs:
     - name: Setup MSBuild.exe
       uses: actions/setup-dotnet@v3
       
-    - run: dotnet build 
+    - run: dotnet build Dotnet-Samples.sln
     
     - name: Create the package
-      run: dotnet pack --configuration Release 
+      run: dotnet pack --configuration Release  Dotnet-Samples.sln
       
 #     - name: Azure Login
 #       uses: azure/docker-login@v1
